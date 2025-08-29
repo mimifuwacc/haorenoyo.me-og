@@ -18,20 +18,24 @@ export async function GET(req: NextRequest) {
     const title = host.replace(/\.haorenoyo\.me$/, "");
 
     const svg = await satori(
-      React.createElement("div", {
-        style: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "1200px",
-          height: "630px",
-          backgroundColor: "#fff",
-          color: "#000",
-          lineHeight: "1.2",
-          fontWeight: "bold",
+      React.createElement(
+        "div",
+        {
+          style: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "1200px",
+            height: "630px",
+            backgroundColor: "#fff",
+            color: "#000",
+            lineHeight: "1.2",
+            fontWeight: "bold",
+          },
         },
-        children: [
-          React.createElement("p", {
+        React.createElement(
+          "p",
+          {
             style: {
               display: "flex",
               alignItems: "flex-end",
@@ -42,36 +46,34 @@ export async function GET(req: NextRequest) {
               whiteSpace: "pre-line",
               margin: "0 auto",
             },
-            children: [
-              React.createElement(
-                "span",
-                {
-                  style: {
-                    fontSize: "80px",
-                    wordBreak: "break-word",
-                    whiteSpace: "pre-line",
-                    maxWidth: "1100px",
-                    transform: /[a-zA-Z]/.test(title)
-                      ? "translateY(8px)"
-                      : "translateY(0)",
-                  },
-                },
-                title
-              ),
-              React.createElement(
-                "span",
-                {
-                  style: {
-                    color: "#888",
-                    fontSize: "48px",
-                  },
-                },
-                ".haorenoyo.me"
-              ),
-            ],
-          }),
-        ],
-      }),
+          },
+          React.createElement(
+            "span",
+            {
+              style: {
+                fontSize: "80px",
+                wordBreak: "break-word",
+                whiteSpace: "pre-line",
+                maxWidth: "1100px",
+                transform: /[a-zA-Z]/.test(title)
+                  ? "translateY(8px)"
+                  : "translateY(0)",
+              },
+            },
+            title
+          ),
+          React.createElement(
+            "span",
+            {
+              style: {
+                color: "#888",
+                fontSize: "48px",
+              },
+            },
+            ".haorenoyo.me"
+          )
+        )
+      ),
       {
         width: 1200,
         height: 630,
