@@ -10,10 +10,10 @@ export async function GET(req: NextRequest) {
     const title = host.replace(/\.haorenoyo\.me$/, "");
 
     const sourceCodeProFont = await fetch(
-      "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,700;1,700&display=swap"
+      "https://haorenoyo-me-og.vercel.app/font/SourceCodePro-Bold.ttf"
     ).then((resp) => resp.arrayBuffer());
     const notoSansJpFont = await fetch(
-      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap"
+      "https://haorenoyo-me-og.vercel.app/font/NotoSansJP-Bold.ttf"
     ).then((resp) => resp.arrayBuffer());
 
     return new ImageResponse(
