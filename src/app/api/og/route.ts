@@ -1,23 +1,21 @@
-import satori from "satori";
+import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import React from "react";
-
 import fs from "fs";
-import sharp from "sharp";
 
 export async function GET(req: NextRequest) {
-  const fontData = {
-    sourceCodePro: fs.readFileSync("src/font/SourceCodePro-Bold.ttf"),
-    notoSansJp: fs.readFileSync("src/font/NotoSansJP-Bold.ttf"),
-  };
-
   try {
     const { searchParams } = new URL(req.url);
 
     const host = decodeURIComponent(searchParams.get("host") ?? "");
     const title = host.replace(/\.haorenoyo\.me$/, "");
 
-    const svg = await satori(
+    const sourceCodeProFont = fs.readFileSync(
+      "src/font/SourceCodePro-Bold.ttf"
+    );
+    const notoSansJpFont = fs.readFileSync("src/font/NotoSansJP-Bold.ttf");
+
+    return new ImageResponse(
       React.createElement(
         "div",
         {
@@ -25,8 +23,8 @@ export async function GET(req: NextRequest) {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            width: "1200px",
-            height: "630px",
+            width: "100%",
+            height: "100%",
             backgroundColor: "#fff",
             color: "#000",
             lineHeight: "1.2",
@@ -45,13 +43,13 @@ export async function GET(req: NextRequest) {
               wordBreak: "break-word",
               whiteSpace: "pre-line",
               margin: "0 auto",
+              fontSize: "80px",
             },
           },
           React.createElement(
             "span",
             {
               style: {
-                fontSize: "80px",
                 wordBreak: "break-word",
                 whiteSpace: "pre-line",
                 maxWidth: "1100px",
@@ -65,12 +63,12 @@ export async function GET(req: NextRequest) {
           React.createElement(
             "span",
             {
-              style: {
+              style: title && {
                 color: "#888",
                 fontSize: "48px",
               },
             },
-            ".haorenoyo.me"
+            `${title && "."}haorenoyo.me`
           )
         )
       ),
@@ -80,27 +78,19 @@ export async function GET(req: NextRequest) {
         fonts: [
           {
             name: "Source Code Pro",
-            data: fontData.sourceCodePro,
+            data: sourceCodeProFont,
             weight: 400,
             style: "normal",
           },
           {
             name: "Noto Sans JP",
-            data: fontData.notoSansJp,
+            data: notoSansJpFont,
             weight: 400,
             style: "normal",
           },
         ],
       }
     );
-
-    const png = await sharp(Buffer.from(svg)).png().toBuffer();
-
-    return new Response(new Uint8Array(png), {
-      headers: {
-        "Content-Type": "image/png",
-      },
-    });
   } catch (error) {
     console.error("OG image generation error:", error);
     return new Response(
