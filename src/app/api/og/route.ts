@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 import React from "react";
-import fs from "fs";
 
 export async function GET(req: NextRequest) {
   try {
@@ -10,12 +9,12 @@ export async function GET(req: NextRequest) {
     const host = decodeURIComponent(searchParams.get("host") ?? "");
     const title = host.replace(/\.haorenoyo\.me$/, "");
 
-    const sourceCodeProFont = fs.readFileSync(
-      `${process.cwd()}/src/font/SourceCodePro-Bold.ttf`
-    );
-    const notoSansJpFont = fs.readFileSync(
-      `${process.cwd()}/src/font/NotoSansJP-Bold.ttf`
-    );
+    const sourceCodeProFont = await fetch(
+      "https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,700;1,700&display=swap"
+    ).then((resp) => resp.arrayBuffer());
+    const notoSansJpFont = await fetch(
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap"
+    ).then((resp) => resp.arrayBuffer());
 
     return new ImageResponse(
       React.createElement(
