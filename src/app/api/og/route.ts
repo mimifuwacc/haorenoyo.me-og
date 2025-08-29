@@ -11,9 +11,11 @@ export async function GET(req: NextRequest) {
     const title = host.replace(/\.haorenoyo\.me$/, "");
 
     const sourceCodeProFont = fs.readFileSync(
-      "src/font/SourceCodePro-Bold.ttf"
+      `${process.cwd()}/src/font/SourceCodePro-Bold.ttf`
     );
-    const notoSansJpFont = fs.readFileSync("src/font/NotoSansJP-Bold.ttf");
+    const notoSansJpFont = fs.readFileSync(
+      `${process.cwd()}/src/font/NotoSansJP-Bold.ttf`
+    );
 
     return new ImageResponse(
       React.createElement(
