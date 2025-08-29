@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
 
     const host = decodeURIComponent(searchParams.get("host") ?? "");
-    const title = host.replace(/\.haorenoyo\.me$/, "");
+    const title = host.replace(/\.?haorenoyo\.me$/, "");
 
     const sourceCodeProFont = await fetch(
       "https://haorenoyo-me-og.vercel.app/font/SourceCodePro-Bold.ttf"
